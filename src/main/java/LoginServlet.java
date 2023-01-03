@@ -23,13 +23,15 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //defining regex for username
         String userName = "^[A-Z][a-z]{3,}$";
+        // defining regex for password
+        String passWord = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\\\S+$).{8,20}$";
         //get request parameters for userID and password
         String user = request.getParameter("user");
         String pwd = request.getParameter("pwd");
         //get servlet config init params
         String userID = getServletConfig().getInitParameter("user");
         String password = getServletConfig().getInitParameter("password");
-        if(Pattern.matches(userName , user)) {
+        if(Pattern.matches(userName , user) && Pattern.matches(passWord,pwd)) {
             if (userID.equals(user) && password.equals(pwd)) {
                 request.setAttribute("user", user);
                 request.getRequestDispatcher("LoginSuccess.jsp").forward(request, response);
@@ -42,7 +44,7 @@ public class LoginServlet extends HttpServlet {
         } else {
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.html");
             PrintWriter out = response.getWriter();
-            out.println("<font color=red>Either username is invalid.</font>");
+            out.println("<font color=red>Either username or password is invalid.</font>");
             rd.include(request, response);
         }
     }
