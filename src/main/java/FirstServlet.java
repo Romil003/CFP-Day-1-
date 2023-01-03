@@ -9,9 +9,9 @@ import java.io.PrintWriter;
 @WebServlet("/FirstServlet")
 public class FirstServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html");
-        PrintWriter out = resp.getWriter();
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
         out.println("<h3>Hello World My First Servlet!</h3>");
         out.close();
     }
